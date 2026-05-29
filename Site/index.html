@@ -34,12 +34,12 @@
             overflow-x: hidden;
         }
 
-        header h1 {
-            font-size: 1.8rem;
-            letter-spacing: 4px;
-            color: var(--neon-blue);
-            text-transform: uppercase;
-            text-shadow: 0 0 10px var(--neon-blue);
+            .logo-loja {
+                max-height: 120px; /* Altere este valor para deixar o logo maior ou menor */
+                width: auto;      /* Mantém a proporção da imagem sem distorcer */
+                display: block;   /* Garante que o parágrafo de baixo vá para a linha inferior */
+                margin: 0 auto 10px auto; /* Centraliza o logo e joga o texto de status um pouco para baixo */
+                filter: drop-shadow(0 0 8px var(--neon-blue)); /* Dá o mesmo efeito luminoso (neon) na sua imagem! */
         }
 
         header p {
@@ -64,7 +64,95 @@
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 25px;
         }
-        /*voltar para cá e inserir os cards*/
+       /* Card de Produto (Módulo de Carga) */
+       .card {
+            background: var(--panel-bg);
+            border: 1px solid rgba(0, 243, 255, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 3px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+            opacity: 0.7;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
+        }
+
+        .card-img {
+            height: 150px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem; /* Usando emoji para simplificar o modelo */
+            margin-bottom: 15px;
+            border: 1px dashed rgba(255,255,255,0.1);
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .card-desc {
+            font-size: 0.85rem;
+            color: #8a99ad;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--neon-blue);
+        }
+
+        .btn-add {
+            background: transparent;
+            border: 1px solid var(--neon-blue);
+            color: var(--neon-blue);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            transition: all 0.2s ease;
+        }
+
+        /* Painel Lateral (Computador de Bordo / Carrinho) */
+        .btn-add:hover {
+            background: var(--neon-blue);
+            color: var(--bg-space);
+            box-shadow: 0 0 10px var(--neon-blue);
+        }
+
 
         .sidebar {
             flex: 1;
@@ -129,6 +217,20 @@
             transition: opacity 0.2s;
         }
 
+        /* Garante que a imagem preencha o espaço do card sem distorcer */
+.produto-foto {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Faz a imagem cobrir o quadrado cortando as sobras de forma elegante */
+    border-radius: 8px; /* Mantém as bordas arredondadas que já estavam no design */
+}
+
+/* Ajuste opcional: remove o padding ou tamanho de fonte antigo se achar necessário */
+.card-img {
+    font-size: 0; /* Remove espaço fantasma de texto */
+    overflow: hidden;
+}
+
         .btn-checkout:hover {
             opacity: 0.9;
             box-shadow: 0 0 15px var(--neon-purple);
@@ -149,7 +251,7 @@
     </head>
     <header>
         <div class="topo">
-        <h1><img src="img/logotapiocageekstore.png" alt="Logo da Página"></h1>
+        <h1><img src="img/logotapiocageekstore.png" alt="Logo SpaceCommerce" class="logo-loja"></h1>
         <p>Status do Sistema: <span style="color: #00ff66;">Online</span> | Setor de Carga Disponível</p>
         </div>  
     
@@ -169,8 +271,108 @@
         <h2 style="text-align: center;">
             somos a tapioca Geek Store, o "cargueiro" loja mais rápido de toda galáxia.
         </h2>
+        <div class="container">
         
-            
+            <main class="vitrine" id="vitrine-produtos">
+                </main>
+    
+            <aside class="sidebar">
+                <h2>Módulo de Carga</h2>
+                <div class="carrinho-itens" id="carrinho-lista">
+                    <p style="color: #64748b; font-size: 0.85rem; text-align: center; margin-top: 20px;">Nenhum item na órbita de compra.</p>
+                </div>
+                <div class="total-section">
+                    <span>TOTAL:</span>
+                    <span id="total-preco">0.00 CRÉDITOS</span>
+                </div>
+                <button class="btn-checkout" onclick="finalizarMissao()">Iniciar Propulsão (Comprar)</button>
+            </aside>
+    
+        </div>
+        <script>
+            // Dados dos produtos simulando um banco de dados cósmico
+            const produtos = [
+                { id: 1, nome: "Minifigures", desc: "Aumenta o nivvel de endorfina toda vez que adquirir um para sua coleção", preco: 20, imagem: "img/minifiguregeek.png" },
+                { id: 2, nome: "Camiseta Geek", desc: "Defesa máxima contra modinha", preco: 50, imagem:"img/imgCamisa.png" },
+                { id: 3, nome: "Chaveiros", desc: "Rastreia itens perdidos", preco: 20, imagem: "img/chaveiromlf" },
+                { id: 4, nome: "Miniaturas de Veículos", desc: "A principal frota de sua coleção, aumentá-la é necessario", preco: 50, imagem: "img/miniaturaveic" }
+            ];
+    
+            let carrinho = [];
+    
+            // Função para renderizar os cards na tela de forma limpa
+            function renderizarProdutos() {
+                const vitrine = document.getElementById('vitrine-produtos');
+                vitrine.innerHTML = '';
+    
+                produtos.forEach(prod => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `
+                        <div>
+                            <div class="card-img">
+                                <img src="${prod.imagem}" alt="${prod.nome}" class="img/minifigure.png">
+                            </div>
+                            <div class="card-title">${prod.nome}</div>
+                            <div class="card-desc">${prod.desc}</div>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">${prod.preco} CC</span>
+                            <button class="btn-add" onclick="adicionarAoCarrinho(${prod.id})">Adquirir</button>
+                        </div>
+                    `;
+                    vitrine.appendChild(card);
+                });
+            }
+    
+            // Função interativa para adicionar itens ao carrinho
+            function adicionarAoCarrinho(id) {
+                const produto = produtos.find(p => p.id === id);
+                carrinho.push(produto);
+                atualizarCarrinho();
+            }
+    
+            // Atualiza a interface do Computador de Bordo (Carrinho)
+            function atualizarCarrinho() {
+                const lista = document.getElementById('carrinho-lista');
+                const totalTxt = document.getElementById('total-preco');
+                
+                if (carrinho.length === 0) {
+                    lista.innerHTML = `<p style="color: #64748b; font-size: 0.85rem; text-align: center; margin-top: 20px;">Nenhum item na órbita de compra.</p>`;
+                    totalTxt.innerText = "0.00 CRÉDITOS";
+                    return;
+                }
+                lista.innerHTML = '';
+            let total = 0;
+
+            carrinho.forEach(item => {
+                total += item.preco;
+                const div = document.createElement('div');
+                div.className = 'item-carrinho';
+                div.innerHTML = `
+                    <span>${item.nome}</span>
+                    <span>${item.preco} CC</span>
+                `;
+                lista.appendChild(div);
+            });
+
+            totalTxt.innerText = `${total}.00 CRÉDITOS`;
+        }
+
+        // Ação final do botão de checkout
+        function finalizarMissao() {
+            if(carrinho.length === 0) {
+                alert("Seu módulo de carga está vazio. Adicione suprimentos antes de decolar!");
+                return;
+            }
+            alert("Missão iniciada! Seus créditos foram debitados e os produtos estão sendo teleportados para sua nave.");
+            carrinho = [];
+            atualizarCarrinho();
+        }
+
+        // Inicializa a página
+        renderizarProdutos();
+    </script>
         
         <p>
             Siga-nos no instagram:
