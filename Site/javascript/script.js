@@ -1,50 +1,7 @@
-<html lang="pt-br">
-    <head>
-        <title>TapiocaGeekStore</title>
-        <meta charset="utf-8" />
-        <link rel="icon" type="image/png" href="img/logotgs.png">
-        <link rel="stylesheet" href="../Site/CSS/style.css">
-<!-- <link rel="script" href="../Site/javascript/script.js">-->
-                
-    </head>
-    <header>
-        <div class="topo">
-            <h1><img src="img/logotapiocageekstore.png" alt="Logo SpaceCommerce" class="logo-loja"></h1>
-            <p>Status do Sistema: <span style="color: #00ff66;">Online</span> | Setor de Carga Disponível</p>
-        </div>  
-    
-    </header>
 
-    <body style="background-image: url('img/backgroudclean.png'); color: rgb(16, 3, 88);">
-        <div
-       
-       
-        <h1 style="text-align: center;">
-            BEM VINDOS À UMA NOVA AVENTURA!
-        </h1>
-        <h2 style="text-align: center;">
-            Somos a tapioca Geek Store, o "cargueiro" loja mais rápido de toda galáxia.
-        </h2>
-        <div class="container">
-        
-            <main class="vitrine" id="vitrine-produtos">
-                </main>
-    
-            <aside class="sidebar">
-                <h2>Módulo de Carga</h2>
-                <div class="carrinho-itens" id="carrinho-lista">
-                    <p style="color: #64748b; font-size: 0.85rem; text-align: center; margin-top: 20px;">Nenhum item na órbita de compra.</p>
-                </div>
-                <div class="total-section">
-                    <span>TOTAL:</span>
-                    <span id="total-preco">0.00 CRÉDITOS</span>
-                </div>
-                <button class="btn-checkout" onclick="finalizarMissao()">Iniciar Propulsão (Comprar)</button>
-            </aside>
-    
-        </div>
-        <script>
-        // Dados dos produtos simulando um banco de dados cósmico
+                    
+                  
+                    // Dados dos produtos simulando um banco de dados cósmico
                     const produtos = [
                         { id: 1, nome: "Minifigures", desc: "Aumenta o nivvel de endorfina toda vez que adquirir um para sua coleção", preco: 20, imagem: "img/minifiguregeek.png" },
                         { id: 2, nome: "Camiseta Geek", desc: "Defesa máxima contra modinha", preco: 50, imagem:"img/imgCamisa.png" },
@@ -130,12 +87,5 @@
                 }
 
                 // Inicializa a página
-                renderizarProdutos();    
-        </script>
-        <p>
-            Siga-nos no instagram:
-            <a href="https://www.instagram.com/tapiocageekstore/" target="_blank">Página da Loja no Instagram</a>
-        </p>     
-
-    </body>
-</html>
+                renderizarProdutos();
+            
